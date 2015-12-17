@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger,InputType){
 }
 
 -(void)help{
-    NSString* help = @"ImageNameChange help\n"
+    NSString* help = @"\nIMake help\n"
                       "-h Show help message \n"
                       "-d Image change folder\n"
                       "-t Image change type default is 2 ,2 is @2x, 3 is@3x\n";
