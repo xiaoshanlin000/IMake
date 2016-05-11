@@ -12,5 +12,6 @@
 @property (nonatomic,copy) NSString* dirs;//
 @property (nonatomic,copy) NSString* type;//
 
+@property (nonatomic,assign,getter=isRemove) BOOL remove;
 -(BOOL)run;
 @end

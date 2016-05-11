@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSInteger,InputType){
     InputTypeD = 1, // dir
     InputTypeT = 2,//type
+    InputTypeR = 3, //remove @2x or @3x
 };
 @interface Application ()
 
@@ -39,12 +40,17 @@ typedef NS_ENUM(NSInteger,InputType){
             imageChange.dirs = [NSString stringWithUTF8String:argv[index]];
         }else if(type == InputTypeT){
             imageChange.type = [NSString stringWithUTF8String:argv[index]];
+        }else if(type == InputTypeR){
+            imageChange.remove = YES;
         }
         if (strcmp("-d", argv[index])==0 || strcmp("-D", argv[index])==0) {
             type = InputTypeD;
         }else if (strcmp("-t", argv[index]) == 0 || strcmp("-T", argv[index])==0){
             type = InputTypeT;
-        }else{
+        }else if(strcmp("-r", argv[index]) == 0 || strcmp("-R", argv[index])==0){
+            type = InputTypeR;
+        }
+        else{
             type = 0 ;
         }
         index++;
@@ -57,9 +63,11 @@ typedef NS_ENUM(NSInteger,InputType){
 
 -(void)help{
     NSString* help = @"\nIMake help\n"
-                      "-h Show help message \n"
-                      "-d Image change folder\n"
-                      "-t Image change type default is 2 ,2 is @2x, 3 is@3x\n";
+    "-h Show help message \n"
+    "-d Image change folder\n"
+    "-t Image change type default is 2 ,2 is @2x, 3 is@3x\n"
+    "-r Image remove sufix like @2x @3x\n"
+    ;
     NSLog(@"%@",help);
 }
 

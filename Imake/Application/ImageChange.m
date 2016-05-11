@@ -19,8 +19,9 @@
 }
 
 -(BOOL)run{
+    
     NSFileManager*  fileManager = [NSFileManager defaultManager];
-     BOOL isDir = YES;
+    BOOL isDir = YES;
     if (self.dirs == nil || ![fileManager fileExistsAtPath:self.dirs isDirectory:&isDir]) {
         return NO;
     }
@@ -29,7 +30,11 @@
     }
     NSMutableArray*arrays = [[NSMutableArray alloc]init];
     [self allFilesIndirs:self.dirs arrays:arrays];
-    [self imageChangeWithType:self.type arrays:arrays];
+    if (self.isRemove) {
+        [self removeImageSufix:arrays];
+    }else{
+        [self imageChangeWithType:self.type arrays:arrays];
+    }
     NSLog(@"%@",@"Done.");
     return YES;
 }
@@ -68,4 +73,17 @@
         }
     }
 }
+-(void)removeImageSufix:(NSArray*)arrays{
+    for (NSString* image in arrays) {
+        NSString* top = [image stringByDeletingLastPathComponent];
+        NSString* last= [image lastPathComponent];
+        if ([last containsString:@"@2x"] || [last containsString:@"@3x"]) {
+            last = [last stringByReplacingOccurrencesOfString:@"@2x" withString:@""];
+            last = [last stringByReplacingOccurrencesOfString:@"@3x" withString:@""];
+            NSString*newImage = [top stringByAppendingPathComponent:last];
+            [[NSFileManager defaultManager]moveItemAtPath:image toPath:newImage error:nil];
+        }
+    }
+}
+
 @end
